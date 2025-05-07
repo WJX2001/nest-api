@@ -1,10 +1,29 @@
 import { Module } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { AuthController } from './auth.controller';
+// import { AuthResolver } from './auth.resolver';
+import { AuthResolver } from './auth.resolver';
 import { PasswordService } from './password.service';
+import { PassportModule } from '@nestjs/passport';
+import { JwtModule } from '@nestjs/jwt';
+import { ConfigService } from '@nestjs/config';
+import { SecurityConfig } from 'src/common/configs/config.interface';
 
 @Module({
-  providers: [AuthService, PasswordService],
-  controllers: [AuthController],
+  imports: [
+    PassportModule.register({ defaultStrategy: 'jwt' }),
+    JwtModule.registerAsync({
+      useFactory: async (configService: ConfigService) => {
+        const securityConfig = configService.get<SecurityConfig>('security');
+        return {
+          secret: configService.get<string>('JWT_ACCESS_SECRET'),
+          signOptions: {
+            expiresIn: securityConfig?.expiresIn,
+          },
+        };
+      },
+      inject: [ConfigService],
+    }),
+  ],
+  providers: [AuthService, PasswordService, AuthResolver],
 })
 export class AuthModule {}
