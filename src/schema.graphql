@@ -15,7 +15,14 @@ A field whose value is a JSON Web Token (JWT): https://jwt.io/introduction.
 """
 scalar JWT
 
+input LoginInput {
+  email: String!
+  password: String!
+}
+
 type Mutation {
+  login(data: LoginInput!): Auth!
+  refreshToken(token: JWT!): Auth!
   signup(data: SignupInput!): Auth!
 }
 

@@ -1,9 +1,11 @@
-import { Field, HideField } from '@nestjs/graphql';
+import { Field, HideField, ObjectType } from '@nestjs/graphql';
 import { Role } from '@prisma/client';
 import { IsEmail } from 'class-validator';
 import { BaseModel } from 'src/common/models/base.model';
 import { Post } from 'src/posts/models/post.model';
 
+// 将TS类标记为 GraphQL 的Object 类型 用于定义客户端可以获取的字段结构
+@ObjectType()
 export class User extends BaseModel {
   @Field()
   @IsEmail()
