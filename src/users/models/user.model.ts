@@ -1,10 +1,20 @@
-import { Field, HideField, ObjectType } from '@nestjs/graphql';
-import { Role } from '@prisma/client';
+import 'reflect-metadata';
+import {
+  ObjectType,
+  registerEnumType,
+  HideField,
+  Field,
+} from '@nestjs/graphql';
 import { IsEmail } from 'class-validator';
-import { BaseModel } from 'src/common/models/base.model';
+import { BaseModel } from '../../common/models/base.model';
+import { Role } from '@prisma/client';
 import { Post } from 'src/posts/models/post.model';
 
-// 将TS类标记为 GraphQL 的Object 类型 用于定义客户端可以获取的字段结构
+registerEnumType(Role, {
+  name: 'Role',
+  description: 'User role',
+});
+
 @ObjectType()
 export class User extends BaseModel {
   @Field()

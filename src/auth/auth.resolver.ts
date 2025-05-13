@@ -39,10 +39,6 @@ export class AuthResolver {
     return this.auth.refreshToken(token);
   }
 
-  // @ResolveField('user', () => User)
-  // async user(@Parent() auth: Auth) {
-  //   return await this.auth.ge
-  // }
   @ResolveField('user', () => User)
   async user(@Parent() auth: Auth) {
     return await this.auth.getUserFromToken(auth.accessToken);

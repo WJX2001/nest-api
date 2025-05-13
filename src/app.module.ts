@@ -9,6 +9,7 @@ import { UsersModule } from './users/users.module';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { GqlConfigService } from './gql-config.service';
+import { PostsModule } from './posts/posts.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { GqlConfigService } from './gql-config.service';
       driver: ApolloDriver,
       useClass: GqlConfigService,
     }),
+    PostsModule
   ],
   // controllers: [AppResolver],
   providers: [AppService,AppResolver],

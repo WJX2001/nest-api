@@ -109,12 +109,16 @@ export class AuthService {
   async getUserFromToken(token: string): Promise<User> {
     const id = this.jwtService.decode(token)['userId'];
     const user = await this.prisma.user.findUnique({ where: { id } });
-  
+
     if (!user) {
       throw new Error('User not found');
     }
-  
+
     return user;
   }
-  
+
+  // 通过用户ID查找用户是否存在，用于
+  validateUser(userId: string): Promise<User | null> {
+    return this.prisma.user.findUnique({ where: { id: userId } });
+  }
 }

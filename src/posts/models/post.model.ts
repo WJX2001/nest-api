@@ -1,7 +1,8 @@
-import { Field } from '@nestjs/graphql';
+import { Field, ObjectType } from '@nestjs/graphql';
 import { BaseModel } from 'src/common/models/base.model';
 import { User } from 'src/users/models/user.model';
 
+@ObjectType()
 export class Post extends BaseModel {
   @Field()
   title: string;
